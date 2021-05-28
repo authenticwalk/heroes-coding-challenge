@@ -7,6 +7,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { MessagesComponent } from './messages/messages.component';
+import { WeaponsComponent } from './weapons/weapons.component';
+import { ArmoursComponent } from './armours/armours.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -21,7 +23,9 @@ import { AppRoutingModule } from './app-routing.module';
     DashboardComponent,
     HeroesComponent,
     HeroDetailComponent,
-    MessagesComponent
+    MessagesComponent,
+    WeaponsComponent,
+    ArmoursComponent
   ],
   bootstrap: [ AppComponent ]
 })
