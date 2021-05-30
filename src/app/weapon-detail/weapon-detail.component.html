@@ -1,0 +1,11 @@
+<div *ngIf="weapon">
+  <h2>{{weapon.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{weapon.id}}</div>
+  <div>
+    <label for="weapon-name">Weapon name: </label>
+    <input id="weapon-name" [(ngModel)]="weapon.name" placeholder="Weapon name"/>
+    <label for="weapon-damage">Weapon Damage: </label>
+    <input id="weapon-damage" [(ngModel)]="weapon.damage" placeholder="Weapon Damage"/>
+  </div>
+  <button (click)="goBack()">go back</button>
+</div>
