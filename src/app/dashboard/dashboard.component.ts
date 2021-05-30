@@ -19,8 +19,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.getHeroes();
 
-    let width = window.innerWidth * 0.9;
-    let height = window.innerHeight;
+    let width = window.innerWidth * 0.75;
+    let height = window.innerHeight * 0.75;
     this.stage = new Konva.Stage({
       container: 'container',
       width: width,
