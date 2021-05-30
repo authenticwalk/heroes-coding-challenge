@@ -1,4 +1,50 @@
 /* HeroesComponent's private CSS styles */
+.heroes-menu {
+  padding: 0;
+  margin: auto;
+  max-width: 1000px;
+
+  /* flexbox */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+
+a > span {
+ border-radius: 2px;
+  padding: 1rem;
+  font-size: 1.2rem;
+  text-decoration: none;
+  display: inline-block;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  min-width: 100px;
+  margin: .5rem auto;
+  box-sizing: border-box;
+
+  /* flexbox */
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+}
+
+@media (min-width: 600px) {
+  a > span {
+    width: 18%;
+    box-sizing: content-box;
+  }
+}
+
+a:hover  > span {
+  background-color: #000;
+}
+
+
 .heroes {
   margin: 0 0 2em 0;
   list-style-type: none;
@@ -6,10 +52,10 @@
   width: 65em;
 }
 .red{
-  color: red;
+  background-color: red;
 }
 .green{
-  color: green;
+  background-color: green;
 }
 .heroes li {
   position: relative;

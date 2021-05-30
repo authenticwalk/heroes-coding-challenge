@@ -1,5 +1,5 @@
 <h2>My Heroes</h2>
-<ul class="heroes">
+<!-- <ul class="heroes">
   <li *ngFor="let hero of heroes">
     <a routerLink="/detail/{{hero.id}}">
       <span class="badge">{{hero.id}}</span> {{hero.name}},
@@ -9,6 +9,14 @@
         <span *ngIf="key==50">Content to render when condition is true.</span>
       </ng-container> -->
       
-    </a>
+    <!-- </a>
   </li>
-</ul>
+</ul> -->
+
+<div class="heroes-menu">
+  <a *ngFor="let hero of heroes" routerLink="/detail/{{hero.id}}">
+    
+    <span *ngIf="hero.health<50" class="red">{{hero.name}}</span>
+      <span *ngIf="hero.health>=50" class="green">{{hero.name}}</span>
+  </a>
+</div>
