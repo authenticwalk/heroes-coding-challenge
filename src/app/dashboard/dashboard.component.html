@@ -1,7 +1,18 @@
 <h2>Top Heroes</h2>
 <div class="heroes-menu">
-  <a *ngFor="let hero of heroes"
-    routerLink="/detail/{{hero.id}}">
-    {{hero.name}}
+  <a *ngFor="let hero of heroes" (click)="addHero(hero.id)">
+    {{hero.name}} - {{ hero.health + hero.armour.health }}
   </a>
 </div>
+
+<div class="row">
+  <button (click)="startBattle()">
+    Start Battle
+  </button>
+
+  <button (click)="clearBattleGround()">
+    Clear Battle Ground
+  </button>
+</div>
+
+<div id="container"></div>
