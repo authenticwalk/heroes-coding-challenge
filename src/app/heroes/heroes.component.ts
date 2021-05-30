@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Hero } from '../hero';
+import { hero } from '../hero';
 import { HeroService } from '../hero.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { HeroService } from '../hero.service';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  heroes: Hero[] = [];
+  heroes: hero[] = [];
 
   constructor(private heroService: HeroService) { }
 
