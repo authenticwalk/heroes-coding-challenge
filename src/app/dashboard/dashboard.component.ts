@@ -64,6 +64,7 @@ export class DashboardComponent implements OnInit {
   }
 
   clearBattleGround(){
-    this.layer.clear();
+    this.layer.removeChildren();
+    this.layer.draw();
   }
 }
