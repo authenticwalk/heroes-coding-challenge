@@ -1,3 +1,5 @@
+import { getCurrencySymbol } from '@angular/common';
+import { rendererTypeName } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import Konva from 'konva';
 import { Observable } from 'rxjs';
@@ -13,6 +15,8 @@ export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
   stage!: Konva.Stage;
   layer!: Konva.Layer;
+  heroesOnStage = new Map();
+  heroOnStageIds: number[] = [];
 
   constructor(private heroService: HeroService) {}
 
@@ -37,34 +41,112 @@ export class DashboardComponent implements OnInit {
   }
 
   getHero(): Observable<Hero> {
-    const id = Number(Math.floor(Math.random() * 10));
+    const id = this.heroesOnStage.size;
     return this.heroService.getHero(id);
   }
 
   addHero() {
     const component = this;
 
-      this.getHero().subscribe(hero=>{
-        Konva.Image.fromURL(hero.imgSrc, function (heroImg: any) {
-          heroImg.setAttrs({
-            x: 200,
-            y: 50,
-            width: 150,
-            height: 150,   
-            draggable: true,       
-          });
-          component.layer.add(heroImg);
+    this.getHero().subscribe((hero) => {
+      Konva.Image.fromURL(hero.imgSrc, function (heroImg: any) {
+        heroImg.setAttrs({
+          x: 200,
+          y: 50,
+          width: 150,
+          height: 150,
+          draggable: true,
+          shadowColor: 'black',
+          shadowBlur: 10,
+          shadowOffset: {
+            x: 5,
+            y: 5,
+          },
         });
-      }     
-      );  
+        component.layer.add(heroImg);
+
+        component.layer.draw();
+
+        component.heroesOnStage.set(hero, heroImg);
+      });
+    });
   }
 
-  startBattle(){
-
+  startBattle() {
+    this.setColor();
+    this.playTime();
   }
 
-  clearBattleGround(){
+  clearBattleGround() {
     this.layer.removeChildren();
     this.layer.draw();
+    this.heroesOnStage.clear();
+  }
+
+  sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async playTime() {
+    while (this.heroesOnStage.size > 1) {
+      await this.sleep(1000);
+      this.playOneAttack();
+    }
+  }
+
+  playOneAttack() {
+    let damageToEach = this.calculateToSubtract();
+    this.reduceHealth(damageToEach);
+    this.setColor();
+    this.removeHeroes();
+    this.declareWinner();
+    this.layer.draw();
+  }
+
+  calculateToSubtract(): number {
+    let damageCount = 0;
+    for (let hero of this.heroesOnStage.keys()) {
+      damageCount += hero.weapon.damage;
+    }
+
+    return damageCount;
+  }
+
+  reduceHealth(damage: number) {
+    for (let hero of this.heroesOnStage.keys()) {
+      damage -= hero.weapon.damage;
+      hero.armour.health -= damage;
+
+      if (hero.armour.health < 0) {
+        hero.health += hero.armour.health;
+        hero.armour.health = 0;
+      }
+    }
+  }
+
+  setColor() {
+    for (let hero of this.heroesOnStage.keys()) {
+      if (hero.health + hero.armour.health >= 50) {
+        this.heroesOnStage.get(hero).fill('green');
+      } else {
+        this.heroesOnStage.get(hero).fill('red');
+      }
+    }
+  }
+
+  removeHeroes() {
+    for (let hero of this.heroesOnStage.keys()) {
+      if (hero.health + hero.armour.health <= 0) {
+        this.heroesOnStage.get(hero).destroy();
+        this.heroesOnStage.delete(hero);
+      }
+    }
+  }
+
+  declareWinner() {
+    if (this.heroesOnStage.size === 1)
+      for (let hero of this.heroesOnStage.keys()) {
+        alert(`Winner is ${hero.name}`);
+      }
   }
 }
