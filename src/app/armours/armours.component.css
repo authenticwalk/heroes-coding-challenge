@@ -1,26 +1,20 @@
 /* HeroesComponent's private CSS styles */
-.heroes {
+.armours {
   margin: 0 0 2em 0;
   list-style-type: none;
   padding: 0;
-  width: 65em;
+  width: 15em;
 }
-.red{
-  color: red;
-}
-.green{
-  color: green;
-}
-.heroes li {
+.armours li {
   position: relative;
   cursor: pointer;
 }
 
-.heroes li:hover {
+.armours li:hover {
   left: .1em;
 }
 
-.heroes a {
+.armours a {
   color: #333;
   text-decoration: none;
   background-color: #EEE;
@@ -32,17 +26,17 @@
   width: 100%;
 }
 
-.heroes a:hover {
+.armours a:hover {
   color: #2c3a41;
   background-color: #e6e6e6;
 }
 
-.heroes a:active {
+.armours a:active {
   background-color: #525252;
   color: #fafafa;
 }
 
-.heroes .badge {
+.armours .badge {
   display: inline-block;
   font-size: small;
   color: white;

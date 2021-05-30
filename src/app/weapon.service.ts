@@ -9,6 +9,11 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class WeaponService {
 
+  // static getWeaponByID(id: number): Weapon | undefined {
+  //   const weapon = WEAPONS.find(h => h.id === id)!;
+  //   return weapon;
+  // }
+
   constructor(private messageService: MessageService) { }
 
   getWeapons(): Observable<Weapon[]> {

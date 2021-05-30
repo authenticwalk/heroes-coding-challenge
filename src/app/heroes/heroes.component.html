@@ -2,7 +2,13 @@
 <ul class="heroes">
   <li *ngFor="let hero of heroes">
     <a routerLink="/detail/{{hero.id}}">
-      <span class="badge">{{hero.id}}</span> {{hero.name}}
+      <span class="badge">{{hero.id}}</span> {{hero.name}},
+      <span *ngIf="hero.health<50" class="red">Health : {{hero.health}}</span>
+      <span *ngIf="hero.health>=50" class="green">Health : {{hero.health}}</span>
+      <!-- <ng-container *ngFor="let key of Object.values(hero?.weapon)">
+        <span *ngIf="key==50">Content to render when condition is true.</span>
+      </ng-container> -->
+      
     </a>
   </li>
 </ul>
