@@ -3,6 +3,13 @@ import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 import Konva from 'konva';
 
+import { WeaponService } from '../weapon.service';
+import { ArmourService } from '../armour.service';
+
+// import { Hero } from '../hero';
+// import { Armour } from '../armour';
+// import { Armour } from '../armour';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,8 +24,14 @@ export class DashboardComponent implements OnInit {
   numHero: number = 0;
   heroLeft: boolean = false;
   heroRight: boolean = false;
+  hero1: any = {};
+  hero2: any = {};
 
-  constructor(private heroService: HeroService) { }
+  constructor(
+    private heroService: HeroService,
+    private armourService: ArmourService,
+    private weaponService: WeaponService
+  ) { }
 
   ngOnInit() {
     this.getHeroes();
@@ -53,6 +66,35 @@ export class DashboardComponent implements OnInit {
   getHeroes(): void {
     this.heroService.getHeroes()
       .subscribe(heroes => this.heroes = heroes.slice(0, 8));
+  }
+
+  getHero(id: number): Object {
+    let obj: Object = {};
+    this.heroService.getHero(id)
+      .subscribe(hero => Object.assign(obj, this.heroDetail(hero)));
+    
+    return obj;
+  }
+
+  heroDetail(hero: Hero): Object {
+    let obj: Object = {
+      id: hero.id,
+      name: hero.name,
+      hero_health: hero.health
+    };
+    this.armourService.getArmour(hero.armour_id)
+      .subscribe(armour => Object.assign(obj, {
+        armour_name: armour.name,
+        armour_health: armour.health
+      }));
+
+    this.weaponService.getWeapon(hero.weapon_id)
+      .subscribe(weapon => Object.assign(obj, {
+        weapon_name: weapon.name,
+        weapon_damage: weapon.damage
+      }));
+
+    return obj;
   }
 
   checkChildrenHero(id: number): boolean {
@@ -95,6 +137,7 @@ export class DashboardComponent implements OnInit {
             });
             _this.heroLeft = true;
             _this.layer.add(heroImg);
+            _this.hero1 = _this.getHero(id);
             _this.numHero++;
           } else if (!_this.heroRight) {
             heroImg.setAttrs({
@@ -109,18 +152,20 @@ export class DashboardComponent implements OnInit {
             });
             _this.heroRight = true;
             _this.layer.add(heroImg);
+            _this.hero2 = _this.getHero(id);
             _this.numHero++;
           }
         }
       });
     }
-
   }
 
-  clearCanvas(): void {
-    const tr = this.layer.children?.find(item => item.attrs.category == 'background');
-    tr?.destroy();
-    this.layer.draw();
-    console.log(this.layer);
+  startBattle(): void {
+    if (this.numHero == 2) {
+      console.log("start");
+    } else {
+      alert('Please select two heroes');
+    }
   }
+
 }

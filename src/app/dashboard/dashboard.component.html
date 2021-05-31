@@ -1,15 +1,69 @@
 <h2>Top Heroes</h2>
 <div class="heroes-menu">
-  <button class="hero" *ngFor="let hero of heroes" (click)="deployHero(hero.id)">{{hero.name}}</button>
+  <button class="hero" *ngFor="let hero of heroes" (click)="deployHero(hero.id)" [class.heroClicked]="checkChildrenHero(hero.id)">{{hero.name}}</button>
 </div>
 
 <div class="arena">
   <div class="control">
     <div class="button">
-      <button>Start Battle</button>
+      <button (click)="startBattle()">Start Battle</button>
     </div>
-    <div class="button">
-      <button (click)="clearCanvas()">Clear</button>
+  </div>
+  <div class="status">
+    <div class="title">Heroes Status</div>
+    <div class="status-container">
+      <div class="status-form" *ngIf="hero1.name">
+        <div class="status-group">
+          <div class="label">Hero Name</div>
+          <div class="value">{{ hero1 ? hero1.name : '' }}</div>
+        </div>
+        <div class="status-group">
+          <div class="label">Weapon</div>
+          <div class="value">{{ hero1 ? hero1.weapon_name : '' }}</div>
+        </div>
+        <div class="status-group">
+          <div class="label">Damage</div>
+          <div class="value">{{ hero1 ? hero1.weapon_damage : '' }}</div>
+        </div>
+        <div class="status-group">
+          <div class="label">Armour</div>
+          <div class="value">{{ hero1 ? hero1.armour_name : '' }}</div>
+        </div>
+        <div class="status-group">
+          <div class="label">Hero Health</div>
+          <div class="value">{{ hero1 ? hero1.hero_health : '' }}</div>
+        </div>
+        <div class="status-group">
+          <div class="label">Armor Health</div>
+          <div class="value">{{ hero1 ? hero1.armour_health : '' }}</div>
+        </div>
+      </div>
+      <div class="status-form" *ngIf="hero2.name">
+        <div class="status-group">
+          <div class="label">Hero Name</div>
+          <div class="value">{{ hero2 ? hero2.name : '' }}</div>
+        </div>
+        <div class="status-group">
+          <div class="label">Weapon</div>
+          <div class="value">{{ hero2 ? hero2.weapon_name : '' }}</div>
+        </div>
+        <div class="status-group">
+          <div class="label">Damage</div>
+          <div class="value">{{ hero1 ? hero2.weapon_damage : '' }}</div>
+        </div>
+        <div class="status-group">
+          <div class="label">Armour</div>
+          <div class="value">{{ hero2 ? hero2.armour_name : '' }}</div>
+        </div>
+        <div class="status-group">
+          <div class="label">Hero Health</div>
+          <div class="value">{{ hero2 ? hero2.hero_health : '' }}</div>
+        </div>
+        <div class="status-group">
+          <div class="label">Armor Health</div>
+          <div class="value">{{ hero2 ? hero2.armour_health : '' }}</div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="canvas">

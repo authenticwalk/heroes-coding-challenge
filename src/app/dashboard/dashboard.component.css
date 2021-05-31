@@ -46,7 +46,7 @@ h2 {
 }
 
 .hero:hover {
-  background-color: #000;
+  background-color: #303030;
 }
 
 .arena {
@@ -56,4 +56,31 @@ h2 {
 .control {
   display: flex;
   gap: 12px;
+}
+
+.heroClicked {
+  background-color: #000;
+}
+
+.status {
+  margin-bottom: 20px;
+}
+
+.status .title {
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.status .status-container {
+  display: flex;
+  gap: 20vw;
+}
+
+.status-form .status-group {
+  display: flex;
+  gap: 12px;
+}
+
+.status-group .label {
+  font-weight: bold;
 }
