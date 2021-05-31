@@ -1,9 +1,32 @@
 <div *ngIf="hero">
   <h2>{{hero.name | uppercase}} Details</h2>
+  <div class="image-hero">
+    <img src="./assets/heroes/{{hero.id}}.png" />
+  </div>
   <div><span>id: </span>{{hero.id}}</div>
   <div>
     <label for="hero-name">Hero name: </label>
     <input id="hero-name" [(ngModel)]="hero.name" placeholder="Hero name"/>
+  </div>
+  <div class="form">
+    <div class="name">Armour: </div>
+    <div class="field">{{ armour ? armour.name : '' }}</div>
+  </div>
+  <div class="form">
+    <div class="name">Weapon: </div>
+    <div class="field">
+      <select [(ngModel)]="hero.weapon_id" (change)="setWeapon(hero.weapon_id)">
+        <option *ngFor="let item of weapons" [value]="item.id">{{ item.name }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="form">
+    <div class="name">Attack: </div>
+    <div class="field">{{ weapon ? weapon.damage : '' }}</div>
+  </div>
+  <div class="form">
+    <div class="name">Total health: </div>
+    <div class="field">{{ armour ? hero.health+armour.health : '' }}</div>
   </div>
   <button (click)="goBack()">go back</button>
 </div>

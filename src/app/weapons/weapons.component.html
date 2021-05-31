@@ -1,0 +1,8 @@
+<h2>Weapons</h2>
+<ul class="heroes">
+  <li *ngFor="let weapon of weapons">
+    <a>
+      <span class="badge">{{weapon.id}}</span> {{weapon.name}} <span class="font-size-sm">[DAMAGE: <span class="font-bold">{{weapon.damage}}</span>]</span>
+    </a>
+  </li>
+</ul>

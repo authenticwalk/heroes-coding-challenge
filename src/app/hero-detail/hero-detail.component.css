@@ -1,4 +1,10 @@
 /* HeroDetailComponent's private CSS styles */
+.image-hero img {
+  height: 150px;
+  width: auto;
+  margin-bottom: 18px;
+}
+
 label {
   color: #435960;
   font-weight: bold;
@@ -21,4 +27,20 @@ button:disabled {
   background-color: #eee;
   color: #ccc;
   cursor: auto;
+}
+
+.form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.form .name {
+  color: #435960;
+  font-weight: bold;
+}
+
+.form .field {
+  font-size: 1em;
+  padding: .5rem;
 }

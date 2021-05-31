@@ -1,0 +1,8 @@
+<h2>Armours</h2>
+<ul class="heroes">
+  <li *ngFor="let armour of armours">
+    <a>
+      <span class="badge">{{armour.id}}</span> {{armour.name}} <span class="font-size-sm">[SHIELD: <span class="font-bold">{{armour.health}}</span>]</span>
+    </a>
+  </li>
+</ul>
