@@ -5,10 +5,7 @@ import Konva from 'konva';
 
 import { WeaponService } from '../weapon.service';
 import { ArmourService } from '../armour.service';
-
-// import { Hero } from '../hero';
-// import { Armour } from '../armour';
-// import { Armour } from '../armour';
+import { promise } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +23,7 @@ export class DashboardComponent implements OnInit {
   heroRight: boolean = false;
   hero1: any = {};
   hero2: any = {};
+  inBattle: boolean = false;
 
   constructor(
     private heroService: HeroService,
@@ -160,9 +158,48 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  startBattle(): void {
+  isBattleOver(): boolean {
+    if (this.hero1.hero_health == 0 || this.hero2.hero_health == 0) {
+      return true;
+    }
+    return false;
+  }
+
+  timer(ms: number): Promise<void> {
+    return new Promise(res => {
+      setTimeout(res, ms);
+    });
+  }
+
+  attackFromTo(attacker: any, target: any): any {
+    if (target.armour_health > 0) {
+      if (target.armour_health - attacker.weapon_damage > 0) {
+        target.armour_health = target.armour_health - attacker.weapon_damage;
+      } else {
+        target.armour_health = 0;
+        target.hero_health = target.hero_health - (attacker.weapon_damage - target.armour_health);
+      }
+    } else if (target.hero_health > 0) {
+      if (target.hero_health - attacker.weapon_damage > 0) {
+        target.hero_health = target.hero_health - attacker.weapon_damage;
+      } else {
+        target.hero_health = 0;
+      }
+    }
+    return target;
+  }
+
+  async startBattle(): Promise<void> {
     if (this.numHero == 2) {
+      this.inBattle = true;
       console.log("start");
+
+      while(!this.isBattleOver()) {
+        await this.timer(1000);
+        this.hero2 = this.attackFromTo(this.hero1, this.hero2);
+        this.hero1 = this.attackFromTo(this.hero2, this.hero1);
+      }
+      
     } else {
       alert('Please select two heroes');
     }

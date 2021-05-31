@@ -6,7 +6,8 @@
 <div class="arena">
   <div class="control">
     <div class="button">
-      <button (click)="startBattle()">Start Battle</button>
+      <button *ngIf="inBattle" (click)="startBattle()" disabled>Start Battle</button>
+      <button *ngIf="!inBattle" (click)="startBattle()">Start Battle</button>
     </div>
   </div>
   <div class="status">
