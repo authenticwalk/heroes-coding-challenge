@@ -24,6 +24,8 @@ export class DashboardComponent implements OnInit {
   hero1: any = {};
   hero2: any = {};
   inBattle: boolean = false;
+  hero1red: boolean = false;
+  hero2red: boolean = false;
 
   constructor(
     private heroService: HeroService,
@@ -109,14 +111,18 @@ export class DashboardComponent implements OnInit {
 
     if (this.checkChildrenHero(id)) {
       const tr = this.layer.children?.find(item => item.attrs.id == id);
+      const tr_rect = this.layer.children?.find(item => item.attrs.id_hero == id);
 
       if (tr?.attrs.scaleX == 1) {
         this.heroLeft = false;
+        this.hero1red = false;
       } else if (tr?.attrs.scaleX == -1) {
         this.heroRight = false;
+        this.hero2red = false;
       }
 
       tr?.destroy();
+      tr_rect?.destroy();
       this.numHero--;
       this.layer.draw();
     } else {
@@ -158,6 +164,80 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  addRedBackground(): void {
+    if (this.hero1.hero_health <= 50 && !this.hero1red) {
+      const rect1 = new Konva.Rect({
+        x: 100,
+        y: 100,
+        width: 200,
+        scaleX: 1,
+        height: 400,
+        fill: 'red',
+        stroke: 'red',
+        strokeWidth: 1,
+        opacity: 0.4,
+        id_hero: this.hero1.id
+      });
+      this.layer.add(rect1);
+      this.hero1red = true;
+    }
+
+    if (this.hero2.hero_health <= 50 && !this.hero2red) {
+      const rect2 = new Konva.Rect({
+        x: this.width-100,
+        y: 100,
+        width: 200,
+        height: 400,
+        scaleX: -1,
+        fill: 'red',
+        stroke: 'red',
+        strokeWidth: 1,
+        opacity: 0.4,
+        id_hero: this.hero2.id
+      });
+      this.layer.add(rect2);
+      this.hero2red = true;
+    }
+  }
+
+  removeFromCanvas(): void {
+    if (this.hero1.hero_health == 0) {
+      const tr = this.layer.children?.find(item => item.attrs.id == this.hero1.id);
+      const tr_rect = this.layer.children?.find(item => item.attrs.id_hero == this.hero1.id);
+
+      if (tr?.attrs.scaleX == 1) {
+        this.heroLeft = false;
+        this.hero1red = false;
+      } else if (tr?.attrs.scaleX == -1) {
+        this.heroRight = false;
+        this.hero2red = false;
+      }
+
+      tr?.destroy();
+      tr_rect?.destroy();
+      this.numHero--;
+      this.layer.draw();
+    }
+
+    if (this.hero2.hero_health == 0) {
+      const tr = this.layer.children?.find(item => item.attrs.id == this.hero2.id);
+      const tr_rect = this.layer.children?.find(item => item.attrs.id_hero == this.hero2.id);
+
+      if (tr?.attrs.scaleX == 1) {
+        this.heroLeft = false;
+        this.hero1red = false;
+      } else if (tr?.attrs.scaleX == -1) {
+        this.heroRight = false;
+        this.hero2red = false;
+      }
+
+      tr?.destroy();
+      tr_rect?.destroy();
+      this.numHero--;
+      this.layer.draw();
+    }
+  }
+
   isBattleOver(): boolean {
     if (this.hero1.hero_health == 0 || this.hero2.hero_health == 0) {
       return true;
@@ -190,16 +270,20 @@ export class DashboardComponent implements OnInit {
   }
 
   async startBattle(): Promise<void> {
+    this.hero1red = false;
+    this.hero2red = false;
     if (this.numHero == 2) {
       this.inBattle = true;
-      console.log("start");
 
       while(!this.isBattleOver()) {
         await this.timer(1000);
         this.hero2 = this.attackFromTo(this.hero1, this.hero2);
         this.hero1 = this.attackFromTo(this.hero2, this.hero1);
+
+        this.addRedBackground();
       }
-      
+      this.removeFromCanvas();
+      this.inBattle = false;
     } else {
       alert('Please select two heroes');
     }
