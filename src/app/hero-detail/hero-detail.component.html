@@ -14,7 +14,11 @@
   </div>
   <div class="form">
     <div class="name">Weapon: </div>
-    <div class="field">{{ weapon ? weapon.name : '' }}</div>
+    <div class="field">
+      <select [(ngModel)]="hero.weapon_id" (change)="setWeapon(hero.weapon_id)">
+        <option *ngFor="let item of weapons" [value]="item.id">{{ item.name }}</option>
+      </select>
+    </div>
   </div>
   <div class="form">
     <div class="name">Attack: </div>

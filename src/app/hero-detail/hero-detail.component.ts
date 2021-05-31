@@ -17,6 +17,7 @@ import { WeaponService } from '../weapon.service';
   styleUrls: [ './hero-detail.component.css' ]
 })
 export class HeroDetailComponent implements OnInit {
+  weapons: Weapon[] = [];
   hero: Hero | undefined;
   armour: Armour | undefined;
   weapon: Weapon | undefined;
@@ -31,12 +32,23 @@ export class HeroDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getHero();
+    this.getWeapons();
   }
 
   getHero(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.heroService.getHero(id)
       .subscribe(hero => this.heroDetail(hero));
+  }
+
+  getWeapons(): void {
+    this.weaponService.getWeapons()
+    .subscribe(weapons => this.weapons = weapons);
+  }
+
+  setWeapon(id: number): void {
+    this.weaponService.getWeapon(Number(id))
+      .subscribe(weapon => this.weapon = weapon);
   }
 
   heroDetail(hero: Hero): void {

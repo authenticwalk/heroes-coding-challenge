@@ -82,13 +82,13 @@ export class DashboardComponent implements OnInit {
       name: hero.name,
       hero_health: hero.health
     };
-    this.armourService.getArmour(hero.armour_id)
+    this.armourService.getArmour(Number(hero.armour_id))
       .subscribe(armour => Object.assign(obj, {
         armour_name: armour.name,
         armour_health: armour.health
       }));
 
-    this.weaponService.getWeapon(hero.weapon_id)
+    this.weaponService.getWeapon(Number(hero.weapon_id))
       .subscribe(weapon => Object.assign(obj, {
         weapon_name: weapon.name,
         weapon_damage: weapon.damage
