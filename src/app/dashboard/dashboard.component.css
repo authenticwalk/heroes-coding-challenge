@@ -18,7 +18,7 @@ h2 {
   align-items: flex-start;
 }
 
-a {
+.hero {
   background-color: #3f525c;
   border-radius: 2px;
   padding: 1rem;
@@ -39,12 +39,16 @@ a {
 }
 
 @media (min-width: 600px) {
-  a {
+  .hero {
     width: 18%;
     box-sizing: content-box;
   }
 }
 
-a:hover {
+.hero:hover {
   background-color: #000;
+}
+
+.arena {
+  margin-top: 30px;
 }

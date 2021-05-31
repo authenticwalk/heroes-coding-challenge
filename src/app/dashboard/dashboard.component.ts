@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
-import { Observable, of } from 'rxjs';
 import Konva from 'konva';
 
 @Component({
@@ -15,12 +14,9 @@ export class DashboardComponent implements OnInit {
   layer!: Konva.Layer;
   width: number = window.innerWidth*0.6;
   height: number = 500;
+  numHero: number = 0;
 
   constructor(private heroService: HeroService) { }
-
-  public handleClick(component: MouseEvent) {
-    console.log('Hello Circle', component);
-  }
 
   ngOnInit() {
     this.getHeroes();
@@ -36,7 +32,7 @@ export class DashboardComponent implements OnInit {
     this.layer = new Konva.Layer();
     const _this = this;
 
-    Konva.Image.fromURL('https://static.wikia.nocookie.net/finalfantasy/images/8/8e/FFIV_PSP_Castle_Battle.png', function (bgImage: any) {
+    Konva.Image.fromURL('./assets/background.png', function (bgImage: any) {
       bgImage.setAttrs({
         x: 0,
         y: 0,
@@ -45,13 +41,44 @@ export class DashboardComponent implements OnInit {
         draggable: false
       });
       _this.layer.add(bgImage);
-    })
+    });
 
     this.stage.add(this.layer);
   }
 
   getHeroes(): void {
     this.heroService.getHeroes()
-      .subscribe(heroes => this.heroes = heroes.slice(1, 5));
+      .subscribe(heroes => this.heroes = heroes.slice(0, 8));
+  }
+
+  deployHero(id: number): void {
+    const _this = this;
+
+    Konva.Image.fromURL(`./assets/heroes/${id}.png`, function (heroImg: any) {
+      if (_this.numHero == 0) {
+        heroImg.setAttrs({
+          x:100,
+          y: 100,
+          width: 200,
+          height: 400,
+          draggable: false
+        });
+        _this.layer.add(heroImg);
+        _this.numHero++;
+      } else if (_this.numHero == 1) {
+        heroImg.setAttrs({
+          x: _this.width-100,
+          y: 100,
+          width: 200,
+          height: 400,
+          scaleX: -1,
+          draggable: false
+        });
+        _this.layer.add(heroImg);
+        _this.numHero++;
+      }
+    });
+
+    this.stage.add(this.layer);
   }
 }

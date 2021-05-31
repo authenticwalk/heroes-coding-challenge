@@ -1,18 +1,15 @@
 <h2>Top Heroes</h2>
 <div class="heroes-menu">
-  <a *ngFor="let hero of heroes"
-    routerLink="/detail/{{hero.id}}">
-    {{hero.name}}
-  </a>
+  <button class="hero" *ngFor="let hero of heroes" (click)="deployHero(hero.id)">{{hero.name}}</button>
 </div>
 
 <div class="arena">
+  <div class="control">
+    <div class="button">
+      <button class="start">Start Battle</button>
+    </div>
+  </div>
   <div class="canvas">
     <div id="container"></div>
-    <!-- <ko-stage [config]="configStage">
-      <ko-layer>
-        <ko-image [config]="configBgImage"></ko-image>
-      </ko-layer>
-    </ko-stage> -->
   </div>
 </div>
