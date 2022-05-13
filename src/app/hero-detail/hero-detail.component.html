@@ -1,9 +1,18 @@
-<div *ngIf="hero">
-  <h2>{{hero.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{hero.id}}</div>
-  <div>
-    <label for="hero-name">Hero name: </label>
-    <input id="hero-name" [(ngModel)]="hero.name" placeholder="Hero name"/>
-  </div>
-  <button (click)="goBack()">go back</button>
-</div>
+<app-item-detail
+  [item]="hero"
+  [imageDefault]="DEFAULT_IMAGE"
+  [isHero]="true"
+  (emitAddWeapon)="listenWeapons()"
+  (emitAddArmor)="listenArmors()"
+></app-item-detail>
+<app-list-item
+  *ngIf="weapons && isWeapon"
+  [items]="weapons"
+  (onClickItem)="addWeapon($event)"
+></app-list-item>
+
+<app-list-item
+  *ngIf="armors && isArmor"
+  [items]="armors"
+  (onClickItem)="addArmor($event)"
+></app-list-item>

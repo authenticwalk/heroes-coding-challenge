@@ -1,0 +1,8 @@
+<h2>{{ title }}</h2>
+<ul class="list-item">
+  <li *ngFor="let item of items">
+    <a (click)="onClickItem.emit(item)">
+      <span class="badge">{{ item.id }}</span> {{ item.name }}
+    </a>
+  </li>
+</ul>

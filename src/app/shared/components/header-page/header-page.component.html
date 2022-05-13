@@ -1,0 +1,6 @@
+<h1>{{ title }}</h1>
+<nav>
+  <ng-container *ngFor="let navItem of navItems">
+    <a [routerLink]="navItem.routerLink">{{ navItem.name }}</a>
+  </ng-container>
+</nav>
