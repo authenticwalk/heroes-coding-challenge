@@ -1,7 +1,40 @@
-<h2>Top Heroes</h2>
-<div class="heroes-menu">
-  <a *ngFor="let hero of heroes"
-    routerLink="/detail/{{hero.id}}">
-    {{hero.name}}
-  </a>
+<h2>List Heroes</h2>
+<div class="menu-item">
+  <div class="list-item" *ngFor="let hero of heroes">
+    <div class="item" (click)="loadHero(hero)">
+      <img [src]="hero.imageSrc || DEFAULT_IMAGE" style="width: 100%" />
+      <span>
+        {{ hero.name }}
+      </span>
+    </div>
+  </div>
+</div>
+
+<h2>List level</h2>
+<div class="menu-item">
+  <div class="list-item" *ngFor="let level of levels">
+    <span class="item" (click)="loadLevel(level)">
+      {{ level.name }}
+    </span>
+  </div>
+</div>
+<!-- TODO button play and button next when finish battle -->
+<div class="list-btn">
+  <button
+    *ngIf="isReplay && !isPlay"
+    class="btn btn-previous"
+    (click)="Replay()"
+  >
+    Re-Play
+  </button>
+  <button *ngIf="!isReplay && isPlay" class="btn btn-play" (click)="Play()">
+    Play
+  </button>
+  <button
+    *ngIf="isNextLevel && !isPlay"
+    class="btn btn-next"
+    (click)="NextLevel()"
+  >
+    Next Level
+  </button>
 </div>

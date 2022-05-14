@@ -17,7 +17,7 @@ export class ArmorService {
   }
 
   getArmor(id: number): Observable<Armor> {
-    const armor = ARMORS.find((h) => h.id === id)!;
+    const armor = ARMORS.find((armor) => armor.id === id)!;
     this.messageService.add(`armorsService: fetched weapon id=${id}`);
     return of(armor);
   }

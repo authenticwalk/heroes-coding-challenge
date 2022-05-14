@@ -17,7 +17,7 @@ export class WeaponService {
   }
 
   getWeapon(id: number): Observable<Weapon> {
-    const weapon = WEAPONS.find((h) => h.id === id)!;
+    const weapon = WEAPONS.find((weapon) => weapon.id === id)!;
     this.messageService.add(`WeaponService: fetched weapon id=${id}`);
     return of(weapon);
   }
